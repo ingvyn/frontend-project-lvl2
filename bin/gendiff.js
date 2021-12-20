@@ -9,6 +9,13 @@ program
     .description('Compares two configuration files and shows a difference.')
     .option('-f, --format [type]', 'output format')
     .arguments('<filepath1> <filepath2>')
-    .action((filepath1, filepath2) => makeDiff(filepath1, filepath2));
+    .action((filepath1, filepath2) => {
+        const res = makeDiff(filepath1, filepath2);
+        console.log('{');
+        res.forEach(([sign, key, value]) => {
+            console.log(`  ${sign} ${key}: ${value}`);
+        })
+        console.log('}');
+    });
 
 program.parse();
