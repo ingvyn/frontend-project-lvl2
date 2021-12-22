@@ -13,31 +13,17 @@ export default (filepath1, filepath2) => {
     const path2 = resolve(cwd(), filepath2);
     const obj1 = JSON.parse(fs.readFileSync(filepath1, 'utf8'));
     const obj2 = JSON.parse(fs.readFileSync(filepath2, 'utf8'));
-    const obj1Entries = Object.entries(obj1);
-    const obj2Entries = Object.entries(obj2);
-    const mapObject1 = obj1Entries.map(([key, value]) => {
-        if (_.has(obj2, key)) {
-            if (obj2[key] === value) {
-                return [' ', key, value];
+    const handleKeyString = (key) => {
+        if (_.has(obj1, key)) {
+            if (!_.has(obj2, key)) {
+                return `  - ${key}: ${obj2[key]}\n`;
             }
-            else {
-                return ['-', key, value]
-            }
+            if (obj1[key] === obj2[key]) return `    ${key}: ${obj1[key]}\n`;
+            return `  - ${key}: ${obj1[key]}\n  + ${key}: ${obj2[key]}\n`;
         }
-        return ['-', key, value];
-    });
-    const mapObject2 = obj2Entries.map(([key, value]) => {
-        if (!_.has(obj1, key)) {
-            return ['+', key, value];
-        }
-        else if (obj1[key] !== value) {
-            return ['+', key, value];
-        }
-        return [];
-    })
-    .filter((el) => el.length);
-    const mapConcatObject = mapObject1.concat(mapObject2);
-    const mapResult = _.sortBy(mapConcatObject, function ([sign, key]) { return key + (sign === '-' ? '' : sign); });
-    const resString = '{\n' + mapResult.reduce((acc, [sign, key, value]) => acc + `  ${sign} ${key}: ${value}\n`, '') + '}';
+        return `  + ${key}: ${obj2[key]}\n`;
+    };
+    const allObjectKeys = _.sortBy(Object.keys({...obj1, ...obj2}));
+    const resString = '{\n' + allObjectKeys.reduce((acc, key) => acc + handleKeyString(key), '') + '}';
     return resString;
 };
