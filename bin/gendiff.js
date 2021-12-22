@@ -10,12 +10,7 @@ program
     .option('-f, --format [type]', 'output format')
     .arguments('<filepath1> <filepath2>')
     .action((filepath1, filepath2) => {
-        const res = makeDiff(filepath1, filepath2);
-        console.log('{');
-        res.forEach(([sign, key, value]) => {
-            console.log(`  ${sign} ${key}: ${value}`);
-        })
-        console.log('}');
+        console.log(makeDiff(filepath1, filepath2));
     });
 
 program.parse();

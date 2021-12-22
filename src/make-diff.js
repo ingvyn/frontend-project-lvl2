@@ -38,5 +38,6 @@ export default (filepath1, filepath2) => {
     .filter((el) => el.length);
     const mapConcatObject = mapObject1.concat(mapObject2);
     const mapResult = _.sortBy(mapConcatObject, function ([sign, key]) { return key + (sign === '-' ? '' : sign); });
-    return mapResult;
+    const resString = '{\n' + mapResult.reduce((acc, [sign, key, value]) => acc + `  ${sign} ${key}: ${value}\n`, '') + '}';
+    return resString;
 };
