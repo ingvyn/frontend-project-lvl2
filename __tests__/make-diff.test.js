@@ -11,5 +11,5 @@ test('gendifference', () => {
   const path1 = getFixturePath('file1.json');
   const path2 = getFixturePath('file2.json');
   expect(makeDiff(path1, path2)).toEqual(`{\n  - follow: undefined\n    host: hexlet.io
-    - proxy: undefined\n  - timeout: 50\n  + timeout: 20\n  + verbose: true\n}`);
+  - proxy: undefined\n  - timeout: 50\n  + timeout: 20\n  + verbose: true\n}`);
 });
