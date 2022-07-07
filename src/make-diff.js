@@ -11,7 +11,7 @@ export default (filepath1, filepath2) => {
   const handleKeyString = (key) => {
     if (_.has(obj1, key)) {
       if (!_.has(obj2, key)) {
-        return `  - ${key}: ${obj2[key]}\n`;
+        return `  - ${key}: ${obj1[key]}\n`;
       }
       if (obj1[key] === obj2[key]) return `    ${key}: ${obj1[key]}\n`;
       return `  - ${key}: ${obj1[key]}\n  + ${key}: ${obj2[key]}\n`;
