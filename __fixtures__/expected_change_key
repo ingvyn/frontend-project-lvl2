@@ -1,0 +1,5 @@
+{
+    aDelete: true
+  - bChValue: no
+  + bChValue: yes
+}
