@@ -1,5 +1,7 @@
 import fs from 'fs';
-import { test, expect, describe, beforeAll } from '@jest/globals';
+import {
+  test, expect, describe, beforeAll,
+} from '@jest/globals';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import makeDiff from '../src/make-diff.js';
