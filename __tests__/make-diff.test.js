@@ -30,7 +30,7 @@ describe('JSON', () => {
 });
 describe('YAML', () => {
   beforeAll(() => {
-    extension = '.yml';
+    extension = '.yaml';
   });
   testSuiteRun();
 });
