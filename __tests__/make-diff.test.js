@@ -5,32 +5,26 @@ import {
 import { fileURLToPath } from 'url';
 import path from 'path';
 import makeDiff from '../src/make-diff.js';
+import expected from '../__fixtures__/expected.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
-let extension;
-const testAction = (actionName) => {
-  const path1 = getFixturePath('source'.concat(extension));
-  const path2 = getFixturePath(actionName.concat(extension));
-  const resPath = getFixturePath('expected_'.concat(actionName));
-  const result = fs.readFileSync(resPath, 'utf8');
-  expect(makeDiff(path1, path2)).toEqual(result);
-};
-const testSuiteRun = () => {
-  test('delete_key', testAction.bind(null, 'delete_key'));
-  test('change_key', testAction.bind(null, 'change_key'));
-  test('add_key', testAction.bind(null, 'add_key'));
-};
-describe('JSON', () => {
+
+describe.each([
+  ['.json'],
+  ['.yaml'],
+])('testing format %s', (extension) => {
+  let srcPath;
   beforeAll(() => {
-    extension = '.json';
+    srcPath = getFixturePath('source'.concat(extension));
   });
-  testSuiteRun();
-});
-describe('YAML', () => {
-  beforeAll(() => {
-    extension = '.yaml';
+  test.each([
+    ['add_key'],
+    ['change_key'],
+    ['delete_key'],
+  ])('%s', (action) => {
+    const transPath = getFixturePath(action.concat(extension));
+    expect(makeDiff(srcPath, transPath)).toEqual(expected[action]);
   });
-  testSuiteRun();
 });
