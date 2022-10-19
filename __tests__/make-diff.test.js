@@ -1,4 +1,3 @@
-import fs from 'fs';
 import {
   test, expect, describe, beforeAll,
 } from '@jest/globals';
