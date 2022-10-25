@@ -1,5 +1,9 @@
 {
   "aDelete": true,
   "bChValue": "no",
-  "_newKey": "newValue"
+  "_newKey": "newValue",
+  "cObjKey": {
+    "1st": "a",
+    "2nd": "b"
+  }
 }

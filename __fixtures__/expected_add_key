@@ -2,4 +2,8 @@
   + _newKey: newValue
     aDelete: true
     bChValue: no
+  + cObjKey: {
+        "1st": "a",
+        "2nd": "b"
+    }
 }

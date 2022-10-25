@@ -3,10 +3,6 @@ export default {
   + _newKey: newValue
     aDelete: true
     bChValue: no
-  + cObjKey: {
-        1st: a
-        2nd: b
-    }
 }`,
   change_key: `{
     aDelete: true
