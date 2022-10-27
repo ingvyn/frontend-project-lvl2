@@ -1,2 +1,8 @@
 aDelete: true
 bChValue: "yes"
+dObject:
+  aRemain: 1
+  bChanged: 1
+  cDeleted: true
+sObject:
+  sKey: "sValue"

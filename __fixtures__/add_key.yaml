@@ -1,3 +1,13 @@
 aDelete: true
 bChValue: "no"
 _newKey: "newValue"
+cObjKey:
+  1st: "a"
+  2nd: "b"
+dObject:
+  aRemain: 1
+  bChanged: 0
+  cDeleted: true
+  eAdded: true
+sObject:
+  sKey: "sValue"

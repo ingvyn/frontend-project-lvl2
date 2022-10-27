@@ -1,4 +1,12 @@
 {
   "aDelete": true,
-  "bChValue": "no"
+  "bChValue": "no",
+  "dObject": {
+    "aRemain": 1,
+    "bChanged": 0,
+    "cDeleted": true
+  },
+  "sObject": {
+    "sKey": "sValue"
+  }
 }
