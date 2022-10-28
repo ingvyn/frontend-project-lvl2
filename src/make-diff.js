@@ -19,38 +19,32 @@ const makeDiff = (filepath1, filepath2) => {
     const minusIndent = '  - ';
     const neutralIndent = '    ';
 
-    const handleKey = (key) => {
+    const handleKeyDiff = (key) => {
       const indent = formatIndent + indentStep;
-      if (!((obj1[key] instanceof Object) || (obj2[key] instanceof Object))) {
-        return () => {
-          if (_.has(obj1, key)) {
-            if (!_.has(obj2, key)) {
-              return `${baseIndent}${minusIndent}${key}: ${obj1[key]}`;
-            }
-            if (obj1[key] === obj2[key]) {
-              return `${baseIndent}${neutralIndent}${key}: ${obj1[key]}`;
-            }
-            return `${baseIndent}${minusIndent}${key}: ${obj1[key]}\n${baseIndent}${plusIndent}${key}: ${obj2[key]}`;
-          }
-          return `${baseIndent}${plusIndent}${key}: ${obj2[key]}`;
-        };
-      }
-      return () => {
-        if (_.has(obj1, key)) {
-          if (!_.has(obj2, key)) {
-            return `${baseIndent}${minusIndent}${key}: ${makeObjectsDiff(obj1[key], _.cloneDeep(obj1[key]), indent)}`;
-          }
+      const displayKeyValue = (keyValue) => {
+        if (!(keyValue instanceof Object)) {
+          return keyValue;
+        }
+        return makeObjectsDiff(keyValue, _.cloneDeep(keyValue), indent);
+      };
+
+      if (_.has(obj1, key)) {
+        if (!_.has(obj2, key)) {
+          return `${baseIndent}${minusIndent}${key}: ${displayKeyValue(obj1[key])}`;
+        }
+        if (obj1[key] === obj2[key]) {
+          return `${baseIndent}${neutralIndent}${key}: ${displayKeyValue(obj1[key])}`;
+        }
+        if ((obj1[key] instanceof Object) && (obj2[key] instanceof Object)) {
           return `${baseIndent}${neutralIndent}${key}: ${makeObjectsDiff(obj1[key], obj2[key], indent)}`;
         }
-        return `${baseIndent}${plusIndent}${key}: ${makeObjectsDiff(obj2[key], _.cloneDeep(obj2[key]), indent)}`;
-      };
+        return `${baseIndent}${minusIndent}${key}: ${displayKeyValue(obj1[key])}\n${baseIndent}${plusIndent}${key}: ${displayKeyValue(obj2[key])}`;
+      }
+      return `${baseIndent}${plusIndent}${key}: ${displayKeyValue(obj2[key])}`;
     };
 
     const allObjectsKeys = _.sortBy(Object.keys({ ...obj1, ...obj2 }));
-    const resString = allObjectsKeys.map((key) => {
-      const keyHandler = handleKey(key);
-      return keyHandler();
-    });
+    const resString = allObjectsKeys.map((key) => handleKeyDiff(key));
     return `{\n${resString.join('\n')}\n${baseIndent}}`;
   };
 
