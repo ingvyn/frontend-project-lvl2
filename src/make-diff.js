@@ -15,7 +15,7 @@ const stylish = (diff) => {
       unchanged: `${baseIndent}    `,
     };
     const resString = diffStruct.flatMap((diffItem) => {
-      const { key, status } = diffItem;
+      const { key, state } = diffItem;
       const outputValue = (valueKeeper) => {
         const { children, value } = valueKeeper;
         if (children.length !== 0 && value === null) {
@@ -24,17 +24,18 @@ const stylish = (diff) => {
         return value;
       };
 
-      if (status === 'changed') {
+      if (state === 'changed' && diffItem.initial) {
         return [
           `${spacing.deleted}${key}: ${outputValue(diffItem.initial)}`,
           `${spacing.added}${key}: ${outputValue(diffItem)}`,
         ];
       }
-      return `${spacing[status]}${key}: ${outputValue(diffItem)}`;
+      return `${spacing[state]}${key}: ${outputValue(diffItem)}`;
     });
 
     return `{\n${resString.join('\n')}\n${baseIndent}}`;
   };
+
   return formatDiff(diff, startIndent);
 };
 
