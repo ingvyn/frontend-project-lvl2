@@ -4,6 +4,40 @@ import { cwd } from 'process';
 import _ from 'lodash';
 import parsers from './parsers.js';
 
+const stylish = (diff) => {
+  const startIndent = 0;
+  const stepIndent = 4;
+  const formatDiff = (diffStruct, formatIndent) => {
+    const baseIndent = ' '.repeat(formatIndent);
+    const spacing = {
+      added: `${baseIndent}  + `,
+      deleted: `${baseIndent}  - `,
+      unchanged: `${baseIndent}    `,
+    };
+    const resString = diffStruct.flatMap((diffItem) => {
+      const { key, status } = diffItem;
+      const outputValue = (valueKeeper) => {
+        const { children, value } = valueKeeper;
+        if (children.length !== 0 && value === null) {
+          return formatDiff(children, formatIndent + stepIndent);
+        }
+        return value;
+      };
+
+      if (status === 'changed') {
+        return [
+          `${spacing.deleted}${key}: ${outputValue(diffItem.initial)}`,
+          `${spacing.added}${key}: ${outputValue(diffItem)}`,
+        ];
+      }
+      return `${spacing[status]}${key}: ${outputValue(diffItem)}`;
+    });
+
+    return `{\n${resString.join('\n')}\n${baseIndent}}`;
+  };
+  return formatDiff(diff, startIndent);
+};
+
 const makeDiff = (filepath1, filepath2) => {
   const path1 = resolve(cwd(), filepath1);
   const path2 = resolve(cwd(), filepath2);
@@ -11,31 +45,30 @@ const makeDiff = (filepath1, filepath2) => {
   const parser2 = parsers[extname(path2)];
   const object1 = parser1(fs.readFileSync(path1, 'utf8'));
   const object2 = parser2(fs.readFileSync(path2, 'utf8'));
-  const getChildren = (obj) => {
 
-  };
   const makeObjectsDiff = (obj1, obj2) => {
     const handleKeyDiff = (key) => {
       let state;
       let value;
       let children;
-      const getKeyValues = (obj) => {
-        const isObject = _.isObject(obj[key]);
-        children = isObject ? getChildren(obj[key]) : [];
-        value = isObject ? obj[key] : null;
+      const getValues = (val) => {
+        const isObject = _.isObject(val);
+        children = isObject ? makeObjectsDiff(val, _.cloneDeep(val)) : [];
+        value = isObject ? null : val;
         return { children, value };
       };
+
       if (_.has(obj1, key)) {
         if (!_.has(obj2, key)) {
           state = 'deleted';
           return {
-            key, state, ...getKeyValues(obj1),
+            key, state, ...getValues(obj1[key]),
           };
         }
         if (obj1[key] === obj2[key]) {
           state = 'unchanged';
           return {
-            key, state, ...getKeyValues(obj1),
+            key, state, ...getValues(obj1[key]),
           };
         }
         if (_.isObject(obj1[key]) && _.isObject(obj2[key])) {
@@ -48,12 +81,12 @@ const makeDiff = (filepath1, filepath2) => {
         }
         state = 'changed';
         return {
-          key, state, initial: { ...getKeyValues(obj1) }, ...getKeyValues(obj2),
+          key, state, initial: { ...getValues(obj1[key]) }, ...getValues(obj2[key]),
         };
       }
       state = 'added';
       return {
-        key, state, ...getKeyValues(obj2),
+        key, state, ...getValues(obj2[key]),
       };
     };
 
@@ -61,7 +94,7 @@ const makeDiff = (filepath1, filepath2) => {
     return allObjectsKeys.map((key) => handleKeyDiff(key));
   };
 
-  return makeObjectsDiff(object1, object2);
+  return stylish(makeObjectsDiff(object1, object2));
 };
 
 export default makeDiff;
