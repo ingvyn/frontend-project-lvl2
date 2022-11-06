@@ -3,43 +3,10 @@ import { resolve, extname } from 'path';
 import { cwd } from 'process';
 import _ from 'lodash';
 import parsers from './parsers.js';
+import formatters from './formatters.js';
 
-const stylish = (diff) => {
-  const startIndent = 0;
-  const stepIndent = 4;
-  const formatDiff = (diffStruct, formatIndent) => {
-    const baseIndent = ' '.repeat(formatIndent);
-    const spacing = {
-      added: `${baseIndent}  + `,
-      deleted: `${baseIndent}  - `,
-      unchanged: `${baseIndent}    `,
-    };
-    const resString = diffStruct.flatMap((diffItem) => {
-      const { key, state } = diffItem;
-      const outputValue = (valueKeeper) => {
-        const { children, value } = valueKeeper;
-        if (children.length !== 0 && value === null) {
-          return formatDiff(children, formatIndent + stepIndent);
-        }
-        return value;
-      };
-
-      if (state === 'changed' && diffItem.initial) {
-        return [
-          `${spacing.deleted}${key}: ${outputValue(diffItem.initial)}`,
-          `${spacing.added}${key}: ${outputValue(diffItem)}`,
-        ];
-      }
-      return `${spacing[state]}${key}: ${outputValue(diffItem)}`;
-    });
-
-    return `{\n${resString.join('\n')}\n${baseIndent}}`;
-  };
-
-  return formatDiff(diff, startIndent);
-};
-
-const makeDiff = (filepath1, filepath2) => {
+const makeDiff = (filepath1, filepath2, format = 'stylish') => {
+  const formatter = formatters[format];
   const path1 = resolve(cwd(), filepath1);
   const path2 = resolve(cwd(), filepath2);
   const parser1 = parsers[extname(path1)];
@@ -95,7 +62,7 @@ const makeDiff = (filepath1, filepath2) => {
     return allObjectsKeys.map((key) => handleKeyDiff(key));
   };
 
-  return stylish(makeObjectsDiff(object1, object2));
+  return formatter(makeObjectsDiff(object1, object2));
 };
 
 export default makeDiff;

@@ -26,4 +26,9 @@ describe.each([
     const transPath = getFixturePath(action.concat(extension));
     expect(makeDiff(srcPath, transPath)).toEqual(expected[action]);
   });
+  test('hexlet example', () => {
+    const path1 = getFixturePath('example1'.concat(extension));
+    const path2 = getFixturePath('example2'.concat(extension));
+    expect(makeDiff(path1, path2)).toEqual(expected.example);
+  });
 });
