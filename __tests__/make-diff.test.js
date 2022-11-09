@@ -22,13 +22,16 @@ describe.each([
     ['add_key'],
     ['change_key'],
     ['delete_key'],
-  ])('%s', (action) => {
+  ])('%s stylish format', (action) => {
     const transPath = getFixturePath(action.concat(extension));
-    expect(makeDiff(srcPath, transPath)).toEqual(expected[action]);
+    expect(makeDiff(srcPath, transPath, 'stylish')).toEqual(expected.stylish[action]);
   });
-  test('hexlet example', () => {
+  test.each([
+    ['stylish'],
+    ['plain'],
+  ])('hexlet example in %s format', (format) => {
     const path1 = getFixturePath('example1'.concat(extension));
     const path2 = getFixturePath('example2'.concat(extension));
-    expect(makeDiff(path1, path2)).toEqual(expected.example);
+    expect(makeDiff(path1, path2, format)).toEqual(expected[format].example);
   });
 });

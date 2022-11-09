@@ -11,7 +11,8 @@ program
   .option('-f, --format [type]', 'output format', 'stylish')
   .arguments('<filepath1> <filepath2>')
   .action((filepath1, filepath2) => {
-    console.log(makeDiff(filepath1, filepath2));
+    const { format } = program.opts();
+    console.log(makeDiff(filepath1, filepath2, format));
   });
 
 program.parse();
