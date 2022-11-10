@@ -3,4 +3,4 @@
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/f223ff3815182d2e54c3/maintainability)](https://codeclimate.com/github/ingvyn/frontend-project-lvl2/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/f223ff3815182d2e54c3/test_coverage)](https://codeclimate.com/github/ingvyn/frontend-project-lvl2/test_coverage)  
-аскинема со сравнением двух плоских файлов https://asciinema.org/a/xECRLZee3KkrBmKhehWOhD37F 
+аскинема сравнения файлов конфигурации различной степени сложности https://asciinema.org/a/77KdYwdhF0LpZg7Zt7xdQV7F2 
