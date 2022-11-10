@@ -3,10 +3,10 @@ import { resolve, extname } from 'path';
 import { cwd } from 'process';
 import _ from 'lodash';
 import parsers from './parsers.js';
-import formatters from './formatters.js';
+import formatters from './formatters/index.js';
 
 const makeDiff = (filepath1, filepath2, format = 'stylish') => {
-  const formatter = formatters[format];
+  const formatter = formatters(format);
   const path1 = resolve(cwd(), filepath1);
   const path2 = resolve(cwd(), filepath2);
   const parser1 = parsers[extname(path1)];
