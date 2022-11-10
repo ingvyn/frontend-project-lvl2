@@ -8,7 +8,7 @@ program
   .name('gendiff')
   .version('1.0.0')
   .description('Compares two configuration files and shows a difference.')
-  .option('-f, --format [type]', 'output format', 'stylish')
+  .option('-f, --format [type]', 'choose output format: stylish or plain', 'stylish')
   .arguments('<filepath1> <filepath2>')
   .action((filepath1, filepath2) => {
     const { format } = program.opts();
