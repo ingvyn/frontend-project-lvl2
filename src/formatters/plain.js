@@ -22,7 +22,7 @@ const plainDiff = (diff) => {
         case 'unchanged':
           return outputValue(diffItem) === '[complex value]' ? formatDiff(diffItem.children, currentKeyChainString) : [];
         default:
-          return 'property information wasn\'t formed. Unknown property status detected.';
+          throw new Error(`Key state ${state} wasn't expected`);
       }
     });
     return resString.join('\n');
