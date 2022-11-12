@@ -29,6 +29,7 @@ describe.each([
   test.each([
     ['stylish'],
     ['plain'],
+    ['json'],
   ])('hexlet example in %s format', (format) => {
     const path1 = getFixturePath('example1'.concat(extension));
     const path2 = getFixturePath('example2'.concat(extension));
