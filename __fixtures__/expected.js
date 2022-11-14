@@ -120,9 +120,11 @@ const json = {
         ]},
     ]},
     {"property": "group1", "state": "unchanged", "innerDiff": [
-        {"property": "baz", "state": "changed", "initial": "bas", "value": "bars"},
+        {"property": "baz", "state": "changed", "initialValue": "bas", "value": "bars"},
         {"property": "foo", "state": "unchanged", "value": "bar"},
-        {"property": "nest", "state": "changed", "initial": [{"property": "key", "state": "unchanged", "value": "value"}], "value": "str"}
+        {"property": "nest", "state": "changed", "initialValue": [
+            {"property": "key", "state": "unchanged", "value": "value"}
+        ], "value": "str"}
     ]},
     {"property": "group2", "state": "deleted", "value": [
         {"property": "abc", "value": 12345},
