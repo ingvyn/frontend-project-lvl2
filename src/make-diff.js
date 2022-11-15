@@ -16,45 +16,47 @@ const makeDiff = (filepath1, filepath2, format = 'stylish') => {
 
   const makeObjectsDiff = (obj1, obj2) => {
     const handleKeyDiff = (key) => {
-      let state;
-      let value;
-      let children;
       const getValues = (val) => {
         const isObject = _.isObject(val);
-        children = isObject ? makeObjectsDiff(val, _.cloneDeep(val)) : [];
-        value = isObject ? null : val;
+        const children = isObject ? makeObjectsDiff(val, _.cloneDeep(val)) : [];
+        const value = isObject ? null : val;
         return { children, value };
       };
 
       if (_.has(obj1, key)) {
         if (!_.has(obj2, key)) {
-          state = 'deleted';
           return {
-            key, state, ...getValues(obj1[key]),
+            key,
+            state: 'deleted',
+            ...getValues(obj1[key]),
           };
         }
         if (obj1[key] === obj2[key]) {
-          state = 'unchanged';
           return {
-            key, state, ...getValues(obj1[key]),
+            key,
+            state: 'unchanged',
+            ...getValues(obj1[key]),
           };
         }
         if (_.isObject(obj1[key]) && _.isObject(obj2[key])) {
-          state = 'unchanged';
-          children = makeObjectsDiff(obj1[key], obj2[key]);
-          value = null;
           return {
-            key, state, children, value,
+            key,
+            state: 'unchanged',
+            children: makeObjectsDiff(obj1[key], obj2[key]),
+            value: null,
           };
         }
-        state = 'changed';
         return {
-          key, state, initial: { ...getValues(obj1[key]) }, ...getValues(obj2[key]),
+          key,
+          state: 'changed',
+          initial: { ...getValues(obj1[key]) },
+          ...getValues(obj2[key]),
         };
       }
-      state = 'added';
       return {
-        key, state, ...getValues(obj2[key]),
+        key,
+        state: 'added',
+        ...getValues(obj2[key]),
       };
     };
 
