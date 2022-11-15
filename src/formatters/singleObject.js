@@ -1,6 +1,7 @@
 const stepIndent = 4;
 const formatAsObject = (diffStruct, formatIndent) => {
   const baseIndent = ' '.repeat(formatIndent);
+  const innerIndent = ' '.repeat(formatIndent + stepIndent);
   const resString = diffStruct.map((diffItem) => {
     const { key, children, value } = diffItem;
     const outputValue = () => {
@@ -9,7 +10,7 @@ const formatAsObject = (diffStruct, formatIndent) => {
       }
       return typeof value === 'string' ? `"${value}"` : value;
     };
-    return `${baseIndent}{"property":"${key}","value":${outputValue()}}`;
+    return `${innerIndent}{"property":"${key}","value":${outputValue()}}`;
   });
 
   return `[\n${resString.join(',\n')}\n${baseIndent}]`;

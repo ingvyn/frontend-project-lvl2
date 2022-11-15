@@ -115,18 +115,18 @@ const json = {
         ]},
         {"property":"setting6","state":"unchanged","innerDiff":[
             {"property":"doge","state":"unchanged","innerDiff":[
-                {"property":"wow","state":"changed","initialValue":"","value":"so much"},
-                {"property":"key","state":"unchanged","value":"value"},
-                {"property":"ops","state":"added","value":"vops"}
-            ]}
-        ]},
+                {"property":"wow","state":"changed","initialValue":"","value":"so much"}
+            ]},
+            {"property":"key","state":"unchanged","value":"value"},
+            {"property":"ops","state":"added","value":"vops"}
+        ]}
     ]},
     {"property":"group1","state":"unchanged","innerDiff":[
         {"property":"baz","state":"changed","initialValue":"bas","value":"bars"},
         {"property":"foo","state":"unchanged","value":"bar"},
         {"property":"nest","state":"changed","initialValue":[
             {"property":"key","value":"value"}
-        ], "value":"str"}
+        ],"value":"str"}
     ]},
     {"property":"group2","state":"deleted","value":[
         {"property":"abc","value":12345},
