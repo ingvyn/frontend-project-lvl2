@@ -103,46 +103,7 @@ Property 'group2' was removed
 Property 'group3' was added with value: [complex value]`,
 };
 const json = {
-  example: `[
-    {"property":"common","state":"unchanged","innerDiff":[
-        {"property":"follow","state":"added","value":false},
-        {"property":"setting1","state":"unchanged","value":"Value 1"},
-        {"property":"setting2","state":"deleted","value":200},
-        {"property":"setting3","state":"changed","initialValue":true,"value":null},
-        {"property":"setting4","state":"added","value":"blah blah"},
-        {"property":"setting5","state":"added","value":[
-            {"property":"key5","value":"value5"}
-        ]},
-        {"property":"setting6","state":"unchanged","innerDiff":[
-            {"property":"doge","state":"unchanged","innerDiff":[
-                {"property":"wow","state":"changed","initialValue":"","value":"so much"}
-            ]},
-            {"property":"key","state":"unchanged","value":"value"},
-            {"property":"ops","state":"added","value":"vops"}
-        ]}
-    ]},
-    {"property":"group1","state":"unchanged","innerDiff":[
-        {"property":"baz","state":"changed","initialValue":"bas","value":"bars"},
-        {"property":"foo","state":"unchanged","value":"bar"},
-        {"property":"nest","state":"changed","initialValue":[
-            {"property":"key","value":"value"}
-        ],"value":"str"}
-    ]},
-    {"property":"group2","state":"deleted","value":[
-        {"property":"abc","value":12345},
-        {"property":"deep","value":[
-            {"property":"id","value":45}
-        ]}
-    ]},
-    {"property":"group3","state":"added","value":[
-        {"property":"deep","value":[
-            {"property":"id","value":[
-                {"property":"number","value":45}
-            ]}
-        ]},
-        {"property":"fee","value":100500}
-    ]}
-]`,
+  example: '[{"property":"common","state":"unchanged","innerDiff":[{"property":"follow","state":"added","value":false},{"property":"setting1","state":"unchanged","value":"Value 1"},{"property":"setting2","state":"deleted","value":200},{"property":"setting3","state":"changed","initialValue":true,"value":null},{"property":"setting4","state":"added","value":"blah blah"},{"property":"setting5","state":"added","value":[{"property":"key5","value":"value5"}]},{"property":"setting6","state":"unchanged","innerDiff":[{"property":"doge","state":"unchanged","innerDiff":[{"property":"wow","state":"changed","initialValue":"","value":"so much"}]},{"property":"key","state":"unchanged","value":"value"},{"property":"ops","state":"added","value":"vops"}]}]},{"property":"group1","state":"unchanged","innerDiff":[{"property":"baz","state":"changed","initialValue":"bas","value":"bars"},{"property":"foo","state":"unchanged","value":"bar"},{"property":"nest","state":"changed","initialValue":[{"property":"key","value":"value"}],"value":"str"}]},{"property":"group2","state":"deleted","value":[{"property":"abc","value":12345},{"property":"deep","value":[{"property":"id","value":45}]}]},{"property":"group3","state":"added","value":[{"property":"deep","value":[{"property":"id","value":[{"property":"number","value":45}]}]},{"property":"fee","value":100500}]}]',
 };
 const expected = { stylish, plain, json };
 export default expected;
