@@ -14,15 +14,12 @@ describe.each([
   ['.json'],
   ['.yaml'],
 ])('testing format %s', (extension) => {
-  let srcPath;
-  beforeAll(() => {
-    srcPath = getFixturePath('source'.concat(extension));
-  });
   test.each([
     ['add_key'],
     ['change_key'],
     ['delete_key'],
   ])('%s stylish format', (action) => {
+    const srcPath = getFixturePath('source'.concat(extension));
     const transPath = getFixturePath(action.concat(extension));
     expect(makeDiff(srcPath, transPath, 'stylish')).toEqual(expected.stylish[action]);
   });
