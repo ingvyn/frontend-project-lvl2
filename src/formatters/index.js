@@ -1,11 +1,10 @@
 import stylish from './stylish.js';
 import plain from './plain.js';
-import json from './jsonStyle.js';
 
 const formatters = {
   stylish,
   plain,
-  json,
+  json: JSON.stringify,
 };
 
 export default (format) => {
