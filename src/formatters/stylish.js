@@ -7,6 +7,7 @@ const stylishDiff = (diff) => {
       added: `${baseIndent}  + `,
       deleted: `${baseIndent}  - `,
       unchanged: `${baseIndent}    `,
+      restructured: `${baseIndent}    `,
     };
     const resString = diffStruct.flatMap((diffItem) => {
       const { key, state } = diffItem;

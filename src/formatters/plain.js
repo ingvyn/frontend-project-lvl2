@@ -20,7 +20,9 @@ const plainDiff = (diff) => {
         case 'changed':
           return `Property '${currentKeyChainString}' was updated. From ${outputValue(diffItem.initial)} to ${outputValue(diffItem)}`;
         case 'unchanged':
-          return outputValue(diffItem) === '[complex value]' ? formatDiff(diffItem.children, currentKeyChainString) : [];
+          return [];
+        case 'restructured':
+          return formatDiff(diffItem.children, currentKeyChainString);
         default:
           throw new Error(`Key state ${state} wasn't expected`);
       }

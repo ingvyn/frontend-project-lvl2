@@ -6,7 +6,7 @@ import parsers from './parsers.js';
 import formatters from './formatters/index.js';
 
 const makeDiff = (filepath1, filepath2, format = 'stylish') => {
-  const formatter = formatters(format);
+  const formatDiff = formatters(format);
   const path1 = resolve(cwd(), filepath1);
   const path2 = resolve(cwd(), filepath2);
   const parser1 = parsers[extname(path1)];
@@ -41,7 +41,7 @@ const makeDiff = (filepath1, filepath2, format = 'stylish') => {
         if (_.isObject(obj1[key]) && _.isObject(obj2[key])) {
           return {
             key,
-            state: 'unchanged',
+            state: 'restructured',
             children: makeObjectsDiff(obj1[key], obj2[key]),
             value: null,
           };
@@ -64,7 +64,7 @@ const makeDiff = (filepath1, filepath2, format = 'stylish') => {
     return allObjectsKeys.map((key) => handleKeyDiff(key));
   };
 
-  return formatter(makeObjectsDiff(object1, object2));
+  return formatDiff(makeObjectsDiff(object1, object2));
 };
 
 export default makeDiff;
