@@ -3,7 +3,7 @@ const formatAsObject = (diffStruct) => {
     const { key } = diffItem;
     const outputValue = (valueKeeper) => {
       if (valueKeeper.value === undefined) {
-        return formatAsObject(valueKeeper.children);
+        return formatAsObject(valueKeeper.structure);
       }
       const { value } = valueKeeper;
       return typeof value === 'string' ? `"${value}"` : value;

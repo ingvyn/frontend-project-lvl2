@@ -5,10 +5,10 @@ const formatDiff = (diffStruct) => {
     const { key, state } = diffItem;
     const outputValue = (valueKeeper) => {
       if (valueKeeper.value === undefined) {
-        const { children } = valueKeeper;
+        const { structure } = valueKeeper;
         return state === 'restructured'
-          ? formatDiff(children)
-          : formatAsObject(children);
+          ? formatDiff(structure)
+          : formatAsObject(structure);
       }
       const { value } = valueKeeper;
       return typeof value === 'string' ? `"${value}"` : value;

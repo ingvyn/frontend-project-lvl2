@@ -18,7 +18,7 @@ const makeDiff = (filepath1, filepath2, format = 'stylish') => {
     const handleKeyDiff = (key) => {
       const getValue = (val) => {
         if (_.isObject(val)) {
-          return { children: makeObjectsDiff(val, _.cloneDeep(val)) };
+          return { structure: makeObjectsDiff(val, _.cloneDeep(val)) };
         }
         return { value: val };
       };
@@ -42,7 +42,7 @@ const makeDiff = (filepath1, filepath2, format = 'stylish') => {
           return {
             key,
             state: 'restructured',
-            children: makeObjectsDiff(obj1[key], obj2[key]),
+            structure: makeObjectsDiff(obj1[key], obj2[key]),
           };
         }
         return {

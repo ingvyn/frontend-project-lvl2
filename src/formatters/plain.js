@@ -22,7 +22,7 @@ const plainDiff = (diff) => {
         case 'unchanged':
           return [];
         case 'restructured':
-          return formatDiff(diffItem.children, currentKeyChainString);
+          return formatDiff(diffItem.structure, currentKeyChainString);
         default:
           throw new Error(`Key state ${state} wasn't expected`);
       }

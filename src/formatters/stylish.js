@@ -13,7 +13,7 @@ const stylishDiff = (diff) => {
       const { key, state } = diffItem;
       const outputValue = (valueKeeper) => {
         if (valueKeeper.value === undefined) {
-          return formatDiff(valueKeeper.children, formatIndent + stepIndent);
+          return formatDiff(valueKeeper.structure, formatIndent + stepIndent);
         }
         return valueKeeper.value;
       };
