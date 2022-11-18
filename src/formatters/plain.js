@@ -6,10 +6,10 @@ const plainDiff = (diff) => {
         ? keyChainString.concat(`.${key}`)
         : key;
       const outputValue = (valueKeeper) => {
-        const { children, value } = valueKeeper;
-        if (children.length !== 0 && value === null) {
+        if (valueKeeper.value === undefined) {
           return '[complex value]';
         }
+        const { value } = valueKeeper;
         return typeof value === 'string' ? `'${value}'` : value;
       };
       switch (state) {

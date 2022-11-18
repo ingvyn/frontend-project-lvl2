@@ -12,11 +12,10 @@ const stylishDiff = (diff) => {
     const resString = diffStruct.flatMap((diffItem) => {
       const { key, state } = diffItem;
       const outputValue = (valueKeeper) => {
-        const { children, value } = valueKeeper;
-        if (children.length !== 0 && value === null) {
-          return formatDiff(children, formatIndent + stepIndent);
+        if (valueKeeper.value === undefined) {
+          return formatDiff(valueKeeper.children, formatIndent + stepIndent);
         }
-        return value;
+        return valueKeeper.value;
       };
 
       if (state === 'changed' && diffItem.initial) {

@@ -1,13 +1,14 @@
 const formatAsObject = (diffStruct) => {
   const resString = diffStruct.map((diffItem) => {
-    const { key, children, value } = diffItem;
-    const outputValue = () => {
-      if (children.length !== 0 && value === null) {
-        return formatAsObject(children);
+    const { key } = diffItem;
+    const outputValue = (valueKeeper) => {
+      if (valueKeeper.value === undefined) {
+        return formatAsObject(valueKeeper.children);
       }
+      const { value } = valueKeeper;
       return typeof value === 'string' ? `"${value}"` : value;
     };
-    return `{"property":"${key}","value":${outputValue()}}`;
+    return `{"property":"${key}","value":${outputValue(diffItem)}}`;
   });
 
   return `[${resString.join(',')}]`;

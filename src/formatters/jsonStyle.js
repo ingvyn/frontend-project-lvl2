@@ -4,12 +4,13 @@ const formatDiff = (diffStruct) => {
   const resString = diffStruct.map((diffItem) => {
     const { key, state } = diffItem;
     const outputValue = (valueKeeper) => {
-      const { children, value } = valueKeeper;
-      if (children.length !== 0 && value === null) {
+      if (valueKeeper.value === undefined) {
+        const { children } = valueKeeper;
         return state === 'restructured'
           ? formatDiff(children)
           : formatAsObject(children);
       }
+      const { value } = valueKeeper;
       return typeof value === 'string' ? `"${value}"` : value;
     };
     const valueName = (state === 'restructured') ? '"innerDiff"' : '"value"';
