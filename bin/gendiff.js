@@ -12,7 +12,14 @@ program
   .arguments('<filepath1> <filepath2>')
   .action((filepath1, filepath2) => {
     const { format } = program.opts();
-    console.log(makeDiff(filepath1, filepath2, format));
+    try {
+      console.log(makeDiff(filepath1, filepath2, format));
+    } catch (err) {
+      if (err.code === 'ENOENT') {
+        console.log(`Файла по указанному пути ${err.path} не существует`);
+      }
+      throw err;
+    }
   });
 
 program.parse();
