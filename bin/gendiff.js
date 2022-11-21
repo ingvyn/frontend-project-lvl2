@@ -15,8 +15,11 @@ program
     try {
       console.log(makeDiff(filepath1, filepath2, format));
     } catch (err) {
-      if (err.code === 'ENOENT') {
-        console.log(`Файла по указанному пути ${err.path} не существует`);
+      if (err.code === 'ENOENT' || err.code === 'EACCES') {
+        console.log(`Файл по указанному пути ${err.path} закрыт для чтения или не существует`);
+      }
+      if (err.code === 'EISDIR') {
+        console.log('Один из приведенных аргументов явялется не файлом, а директорией');
       }
       throw err;
     }
