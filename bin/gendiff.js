@@ -25,13 +25,8 @@ program
         case 'EISDIR':
           console.log('One of the arguments given is not a file, but a directory');
           break;
-        case 'UNKNOWN_STYLEFORMAT':
-          console.log(`An unsupported formatter ${err.myErrFormat} is specified. Specify stylish, plain or json`);
-          break;
-        case 'UNSUPP_PARSEFORMAT':
-          console.log(`The file with the extension ${err.myErrExtension} is not supported`);
-          break;
         default:
+          console.log(err.message);
           throw err;
       }
     }

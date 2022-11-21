@@ -8,10 +8,7 @@ const parsers = {
 
 export default (format) => {
   if (!(format in parsers)) {
-    const error = new Error(`File with extension: ${format} is not supported for parsing`);
-    error.code = 'UNSUPP_PARSEFORMAT';
-    error.myErrExtension = format;
-    throw error;
+    throw new Error(`File with extension: ${format} is not supported for parsing`);
   }
   return parsers[format];
 };

@@ -9,10 +9,7 @@ const formatters = {
 
 export default (format) => {
   if (!(format in formatters)) {
-    const error = new Error(`Unknown style format: ${format}`);
-    error.code = 'UNKNOWN_STYLEFORMAT';
-    error.myErrFormat = format;
-    throw error;
+    throw new Error(`Unknown style format: ${format}`);
   }
   return formatters[format];
 };
