@@ -15,13 +15,25 @@ program
     try {
       console.log(makeDiff(filepath1, filepath2, format));
     } catch (err) {
-      if (err.code === 'ENOENT' || err.code === 'EACCES') {
-        console.log(`Файл по указанному пути ${err.path} закрыт для чтения или не существует`);
+      switch (err.code) {
+        case 'ENOENT':
+          console.log(`The file on the specified path ${err.path} does not exist`);
+          break;
+        case 'EACCES':
+          console.log(`The file on the specified path ${err.path} doesn't have permission for reading`);
+          break;
+        case 'EISDIR':
+          console.log('One of the arguments given is not a file, but a directory');
+          break;
+        case 'UNKNOWN_STYLEFORMAT':
+          console.log(`An unsupported formatter ${err.myErrFormat} is specified. Specify stylish, plain or json`);
+          break;
+        case 'UNSUPP_PARSEFORMAT':
+          console.log(`The file with the extension ${err.myErrExtension} is not supported`);
+          break;
+        default:
+          throw err;
       }
-      if (err.code === 'EISDIR') {
-        console.log('Один из приведенных аргументов явялется не файлом, а директорией');
-      }
-      throw err;
     }
   });
 

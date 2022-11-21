@@ -9,10 +9,12 @@ const makeDiff = (filepath1, filepath2, format = 'stylish') => {
   const formatDiff = formatters(format);
   const path1 = resolve(cwd(), filepath1);
   const path2 = resolve(cwd(), filepath2);
-  const parser1 = parsers[extname(path1)];
-  const parser2 = parsers[extname(path2)];
-  const object1 = parser1(fs.readFileSync(path1, 'utf8'));
-  const object2 = parser2(fs.readFileSync(path2, 'utf8'));
+  const file1Data = fs.readFileSync(path1, 'utf8');
+  const file2Data = fs.readFileSync(path2, 'utf8');
+  const parser1 = parsers(extname(path1));
+  const parser2 = parsers(extname(path2));
+  const object1 = parser1(file1Data);
+  const object2 = parser2(file2Data);
 
   const makeObjectsDiff = (obj1, obj2) => {
     const handleKeyDiff = (key) => {
