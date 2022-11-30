@@ -1,9 +1,9 @@
 import _ from 'lodash';
-import formatters from './formatters/index.js';
+import getFormat from './formatters/index.js';
 import getObject from './read-object.js';
 
 const makeDiff = (filepath1, filepath2, format = 'stylish') => {
-  const formatDiff = formatters(format);
+  const formatDiff = getFormat(format);
   const object1 = getObject(filepath1);
   const object2 = getObject(filepath2);
 
