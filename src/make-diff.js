@@ -1,20 +1,11 @@
-import fs from 'fs';
-import { resolve, extname } from 'path';
-import { cwd } from 'process';
 import _ from 'lodash';
-import parsers from './parsers.js';
 import formatters from './formatters/index.js';
+import getObject from './read-object.js';
 
 const makeDiff = (filepath1, filepath2, format = 'stylish') => {
   const formatDiff = formatters(format);
-  const path1 = resolve(cwd(), filepath1);
-  const path2 = resolve(cwd(), filepath2);
-  const file1Data = fs.readFileSync(path1, 'utf8');
-  const file2Data = fs.readFileSync(path2, 'utf8');
-  const parser1 = parsers(extname(path1));
-  const parser2 = parsers(extname(path2));
-  const object1 = parser1(file1Data);
-  const object2 = parser2(file2Data);
+  const object1 = getObject(filepath1);
+  const object2 = getObject(filepath2);
 
   const makeObjectsDiff = (obj1, obj2) => {
     const handleKeyDiff = (key) => {
