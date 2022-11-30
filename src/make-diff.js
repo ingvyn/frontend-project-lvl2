@@ -7,6 +7,16 @@ const makeDiff = (filepath1, filepath2, format = 'stylish') => {
   const object1 = getObject(filepath1);
   const object2 = getObject(filepath2);
 
+  const getObjectTree = (obj) => Object.entries(obj).map(([key, value]) => {
+    if (_.isObject(value)) {
+      return {
+        key,
+        structure: getObjectTree(value),
+      };
+    }
+    return { key, value };
+  });
+
   const makeObjectsDiff = (obj1, obj2) => {
     const handleKeyDiff = (key) => {
       const getValue = (val) => {
