@@ -13,8 +13,9 @@ export default (filePath) => {
     }
   } else throw new Error(`The file on specified path ${filePath} does not exist`);
   const parser = parsers(extname(path));
+  const data = fs.readFileSync(path, 'utf8');
   try {
-    const object = parser(fs.readFileSync(path, 'utf8'));
+    const object = parser(data);
     if (Object.keys(object).length === 0) {
       throw new Error('There is no data that can be interpreted as configuration');
     }
