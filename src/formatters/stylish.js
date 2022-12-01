@@ -18,13 +18,14 @@ const stylishDiff = (diff) => {
         return valueKeeper.value;
       };
 
+      const generalSpacing = spacing[state] ?? `${baseIndent}    `;
       if (state === 'changed' && diffItem.initial) {
         return [
           `${spacing.deleted}${key}: ${outputValue(diffItem.initial)}`,
           `${spacing.added}${key}: ${outputValue(diffItem)}`,
         ];
       }
-      return `${spacing[state]}${key}: ${outputValue(diffItem)}`;
+      return `${generalSpacing}${key}: ${outputValue(diffItem)}`;
     });
 
     return `{\n${resString.join('\n')}\n${baseIndent}}`;
