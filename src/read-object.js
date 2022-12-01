@@ -9,9 +9,17 @@ export default (filePath) => {
     try {
       fs.accessSync(path, fs.constants.R_OK);
     } catch (err) {
-      throw new Error(`The file on the specified path ${filePath} doesn't have permission for reading`);
+      throw new Error(`The file on specified path ${filePath} doesn't have permission for reading`);
     }
-  } else throw new Error(`The file on the specified path ${filePath} does not exist`);
+  } else throw new Error(`The file on specified path ${filePath} does not exist`);
   const parser = parsers(extname(path));
-  return parser(fs.readFileSync(path, 'utf8'));
+  try {
+    const object = parser(fs.readFileSync(path, 'utf8'));
+    if (Object.keys(object).length === 0) {
+      throw new Error('There is no data that can be interpreted as configuration');
+    }
+    return object;
+  } catch (err) {
+    throw new Error(`${err.message} in the file on the specified path ${filePath}`);
+  }
 };
