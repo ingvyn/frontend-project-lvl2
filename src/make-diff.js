@@ -17,7 +17,7 @@ const makeDiff = (filepath1, filepath2, format = 'stylish') => {
     return { key, value };
   });
 
-  const makeObjectsDiff = (obj1, obj2) => {
+  const makeDiffTree = (obj1, obj2) => {
     const handleKeyDiff = (key) => {
       const getValue = (val) => {
         if (_.isObject(val)) {
@@ -45,7 +45,7 @@ const makeDiff = (filepath1, filepath2, format = 'stylish') => {
           return {
             key,
             state: 'restructured',
-            structure: makeObjectsDiff(obj1[key], obj2[key]),
+            structure: makeDiffTree(obj1[key], obj2[key]),
           };
         }
         return {
@@ -66,7 +66,7 @@ const makeDiff = (filepath1, filepath2, format = 'stylish') => {
     return allObjectsKeys.map((key) => handleKeyDiff(key));
   };
 
-  return formatDiff(makeObjectsDiff(object1, object2));
+  return formatDiff(makeDiffTree(object1, object2));
 };
 
 export default makeDiff;
