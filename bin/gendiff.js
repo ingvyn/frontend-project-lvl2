@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { Command } from 'commander/esm.mjs';
-import makeDiff from '../src/make-diff.js';
+import showCnfFilesDiff from '../src/make-diff.js';
 
 const program = new Command();
 
@@ -13,7 +13,7 @@ program
   .action((filepath1, filepath2) => {
     const { format } = program.opts();
     try {
-      console.log(makeDiff(filepath1, filepath2, format));
+      console.log(showCnfFilesDiff(filepath1, filepath2, format));
     } catch (err) {
       console.log(err.message);
     }

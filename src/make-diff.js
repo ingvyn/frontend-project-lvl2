@@ -1,27 +1,27 @@
 import _ from 'lodash';
-import getFormat from './formatters/index.js';
+import getFormatter from './formatters/index.js';
 import getObject from './read-object.js';
 
-const makeDiff = (filepath1, filepath2, format = 'stylish') => {
-  const formatDiff = getFormat(format);
+const showCnfFilesDiff = (filepath1, filepath2, format = 'stylish') => {
+  const formatDiff = getFormatter(format);
   const object1 = getObject(filepath1);
   const object2 = getObject(filepath2);
 
-  const getObjectTree = (obj) => Object.entries(obj).map(([key, value]) => {
+  const buildObjectTree = (obj) => Object.entries(obj).map(([key, value]) => {
     if (_.isObject(value)) {
       return {
         key,
-        structure: getObjectTree(value),
+        structure: buildObjectTree(value),
       };
     }
     return { key, value };
   });
 
-  const makeDiffTree = (obj1, obj2) => {
+  const buildDiffTree = (obj1, obj2) => {
     const handleKeyDiff = (key) => {
       const getValue = (val) => {
         if (_.isObject(val)) {
-          return { structure: getObjectTree(val) };
+          return { structure: buildObjectTree(val) };
         }
         return { value: val };
       };
@@ -45,7 +45,7 @@ const makeDiff = (filepath1, filepath2, format = 'stylish') => {
           return {
             key,
             state: 'restructured',
-            structure: makeDiffTree(obj1[key], obj2[key]),
+            structure: buildDiffTree(obj1[key], obj2[key]),
           };
         }
         return {
@@ -66,7 +66,7 @@ const makeDiff = (filepath1, filepath2, format = 'stylish') => {
     return allObjectsKeys.map((key) => handleKeyDiff(key));
   };
 
-  return formatDiff(makeDiffTree(object1, object2));
+  return formatDiff(buildDiffTree(object1, object2));
 };
 
-export default makeDiff;
+export default showCnfFilesDiff;
